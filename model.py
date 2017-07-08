@@ -12,6 +12,37 @@ def connect_to_db(app):
     db.init_app(app)
 
 
+class Volunteer(db.Model):
+    """ Language volunteer info """
+
+    __tablename__ = "volunteers"
+
+    volunteer_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    first_name = db.Column(db.String(64))
+    last_name = db.Column(db.String(64))
+    phone = db.Column(db.String(10))
+    active = db.Column(db.Boolean())
+
+
+class Language(db.Model):
+    """ Table of all languages """
+
+    __tablename__ = "languages"
+
+    language_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    language = db.Column(db.String(15), unique=True)
+
+
+class VolunteerLanguage(db.Model):
+    """ Association Table for volunteers and languages """
+
+    __tablename__ = "volunteerlanguage"
+
+    vl_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    v_id = db.Column(db.Integer, db.ForeignKey('volunteers.volunteer_id'))
+    l_id = db.Column(db.Integer, db.ForeignKey('languagess.language_id'))
+
+
 if __name__ == "__main__":
     # As a convenience, if we run this module interactively, it will
     # leave you in a state of being able to work with the database
