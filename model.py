@@ -29,7 +29,7 @@ class Language(db.Model):
 
     __tablename__ = "languages"
 
-    language_id = Column(db.Integer, autoincrement=True, primary_key=True)
+    language_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     language = db.Column(db.String(15), unique=True)
 
 
@@ -39,8 +39,8 @@ class VolunteerLanguage(db.Model):
     __tablename__ = "volunteerlanguage"
 
     vl_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    v_id = db.Column(db.Integer, db.Integer, db.ForeignKey('volunteers.volunteer_id'))
-    l_id = db.Column(db.Integer, db.Integer, db.ForeignKey('languagess.language_id'))
+    v_id = db.Column(db.Integer, db.ForeignKey('volunteers.volunteer_id'))
+    l_id = db.Column(db.Integer, db.ForeignKey('languagess.language_id'))
 
 
 if __name__ == "__main__":
