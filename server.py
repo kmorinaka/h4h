@@ -7,11 +7,8 @@ from model import connect_to_db, db
 
 app = Flask(__name__)
 
-# Required to use Flask sessions and the debug toolbar
 app.secret_key = "ABC"
 
-# Normally, if you use an undefined variable in Jinja2, it fails silently.
-# This is horrible. Fix this so that, instead, it raises an error.
 app.jinja_env.undefined = StrictUndefined
 
 
@@ -21,38 +18,52 @@ def index():
 
     return render_template("homepage.html")
 
+
 @app.route('/new', methods=['GET'])
 def new():
     # include languages
     return render_template("new.html")
 
+
 @app.route('/volunteer/', methods=['POST'])
 def create():
-    # create new volunteer with form params
-    # then redirect profile page
-    # pass id
-    id = 1
-    return redirect("/volunteer/%s" % id)
+    """" Create a new volunteer record from incoming form data """
 
-@app.route('/volunteer/:id', methods=['GET'])
-def show():
-    # query with id
-    # show volunteer info
+    fname = request.form.get(first)
+    lname = request.form.get(last)
+    phone = request.form.get(phone)
 
-    return render_template("profile.html")
+    new_volunteer = Volunteer(first_name=fname, last_name=l_name, phone=phone, active=True)
+    db.session.add(new_volunteer)
+    db.session.commit()
 
-@app.route('/volunteer/:id/edit', methods=['GET'])
-def edit():
+    return redirect("/volunteer/%s" % new_volunteer.volunteer_id)
+
+
+@app.route('/volunteer/<id>', methods=['GET'])
+def show(id):
+    """ Show profile of volunteer """
+
+    volunteer = Volunteer.query.filter_by(volunteer_id=id)
+    languages = VolunteerLanguage.query.filter_by(v_id=id)
+
+    return render_template("profile.html", volunteer)
+
+
+@app.route('/volunteer/<id>/edit', methods=['GET'])
+def edit(id):
     #  show info in form to be edited
 
     return render_template("edit.html")
 
-@app.route('/volunteer/:id', methods=['PUT'])
-def update():
+
+@app.route('/volunteer/<id>', methods=['PUT'])
+def update(id):
     # update with new params
 
     id = 1
     return redirect("/volunteer/%s" % id)
+
 
 if __name__ == "__main__":
   # We have to set debug=True here, since it has to be True at the point

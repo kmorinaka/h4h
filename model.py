@@ -23,6 +23,8 @@ class Volunteer(db.Model):
     phone = db.Column(db.String(15))
     active = db.Column(db.Boolean())
 
+    languages = db.relationship("Language", backref=db.backref("volunteers"), secondary="volunteerlanguage")
+
 
 class Language(db.Model):
     """ Table of all languages """
@@ -47,5 +49,5 @@ if __name__ == "__main__":
 
     from server import app
     connect_to_db(app)
-    db.session.create_all()
+    db.create_all()
     print "Connected to DB."
