@@ -70,6 +70,11 @@ select {
 input {
   padding: 0 8px;
 }
+input#status {
+  width: inherit;
+  margin-left: 74px;
+  cursor: pointer;
+}
 
 .link-container, .button-container {
   text-align: center;
@@ -116,6 +121,23 @@ input {
   color: #686576;
   padding: 20px;
   border-radius: 3px;
+}
+
+.profile-name {
+  display: inline-block;
+}
+
+.circle-icon {
+  background: #F9EAAC;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 5px;
+  height: 12px;
+  width: 12px;
+}
+
+.active {
+  background: #CADAB5;
 }
 
 .label {

@@ -10,7 +10,8 @@
       <div class="profile-card">
         <img class="photo profile-card-photo" src="{{ volunteer.photo }}">
         <div>
-          <h2>{{ volunteer.first_name }} {{ volunteer.last_name }}</h2>
+          <h2 class="profile-name">{{ volunteer.first_name }} {{ volunteer.last_name }}</h2>
+          <div class="circle-icon{% if volunteer.active %} active {% endif %}"></div>
           <div>
             <span class="label">Phone:</span>
             <span class="info">{{ volunteer.phone }}</span>

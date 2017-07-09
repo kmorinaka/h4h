@@ -35,6 +35,10 @@
         {% endfor %}
       </select>
     </div>
+    <div>
+      <label for="status">Status</label>
+      <input type="checkbox" id="status" checked="{{ volunteer.active }}">
+    </div>
     <div class="button-container">
       <button type="submit" class="button btn btn-primary">Submit</button>
     </div>
