@@ -98,20 +98,19 @@ def update(id):
     if active != volunteer.active:
         volunteer.active = active
 
+    # Determine changes in language set for volunteer
     new_languages = set(request.form.getlist('languages'))
     old_languages = {lang.language for lang in new_languages}
-    # Get all new languages and exclude old languages not reaffirmed
     languages_to_add = new_languages - new_languages & old_languages
     languages_to_remove = old_languages - new_languages
 
+    # Update languages
     for language in languages_to_add:
-        language_id = Language.query.filter_by(language = language).one().id
-        vol_lang = VolunteerLanguage(v_id=id, l_id=language_id)
-        db.session.add(vol_lang)
+        language_id = Language.get_id_by_language(language)
+        db.session.add(VolunteerLanguage(v_id=id, l_id=language_id))
     for language in languages_to_remove:
-        language_id = Language.query.filter_by(language = language).one().id
-        vol_lang = VolunteerLanguage(v_id=id, l_id=language_id)
-        db.session.delete(vol_lang)
+        language_id = Language.get_id_by_language(language)
+        db.session.delete(VolunteerLanguage(v_id=id, l_id=language_id))
 
     db.session.commit()
     return redirect("/volunteer/%s" % id)
