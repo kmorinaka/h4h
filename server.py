@@ -47,7 +47,7 @@ def create():
     fname = request.form.get('first')
     lname = request.form.get('last')
     phone = request.form.get('phone')
-    languages = request.form.get_list('language')
+    languages = request.form.getlist('language')
     new_volunteer = Volunteer(first_name=fname, last_name=l_name, phone=phone, active=True)
     db.session.add(new_volunteer)
     db.session.commit()
@@ -97,6 +97,7 @@ def update(id):
         volunteer.phone = phone
     if active != volunteer.active:
         volunteer.active = active
+
 
     db.session.commit()
 
