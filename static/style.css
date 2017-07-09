@@ -127,6 +127,10 @@ input#status {
   display: inline-block;
 }
 
+.profile-info {
+  width: 50%;
+}
+
 .circle-icon {
   background: #F9EAAC;
   border-radius: 50%;

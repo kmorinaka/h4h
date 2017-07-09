@@ -8,8 +8,12 @@
   <div>
     {% for volunteer in volunteers %}
       <div class="profile-card">
-        <img class="photo profile-card-photo" src="{{ volunteer.photo }}">
-        <div>
+        {% if volunteer.photo %}
+          <img class="photo profile-card-photo" src="{{ volunteer.photo }}">
+        {% else %}
+          <img class="photo profile-card-photo" src="http://cfsharpcrew.com/wp-content/uploads/2015/03/default-placeholder.png">
+        {% endif %}
+        <div class="profile-info">
           <h2 class="profile-name">{{ volunteer.first_name }} {{ volunteer.last_name }}</h2>
           <div class="circle-icon{% if volunteer.active %} active {% endif %}"></div>
           <div>
