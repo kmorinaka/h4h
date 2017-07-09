@@ -28,7 +28,6 @@ def phone_number_formatter(phone_number):
         return "+1{}".format(phone_number)
     logging.error("invalid phone number in database: {}".format(phone_number))
 
-<<<<<<< HEAD
 def detect_language(text):
     """detects the language a text string is in and returns the language as a string"""
     langs = {
@@ -40,8 +39,6 @@ def detect_language(text):
     lang_code = detectlanguage.simple_detect(text)
 
     return langs[lang_code]
-=======
->>>>>>> a914192ad018e6674d42ee3a413b672a1e776ec9
 
 def phone_numbers_by_language(language):
     language = Language.query.filter_by(language=language).one()
