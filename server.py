@@ -1,14 +1,11 @@
 from jinja2 import StrictUndefined
 from flask import Flask, render_template, request, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
-
 from model import connect_to_db, db, Language, Volunteer
-
 
 app = Flask(__name__)
 
 app.secret_key = "ABC"
-
 app.jinja_env.undefined = StrictUndefined
 
 
@@ -53,7 +50,7 @@ def show(id):
 
 @app.route('/volunteer/<id>/edit', methods=['GET'])
 def edit(id):
-
+    """" Show a prefilled volunteer form for editing """
     volunteer = Volunteer.query.get(id)
 
     return render_template("edit.html")
@@ -61,6 +58,7 @@ def edit(id):
 
 @app.route('/volunteer/<id>', methods=['PUT'])
 def update(id):
+    """ Update volunteer record """
 
     fname = request.form.get('first')
     lname = request.form.get('last')
@@ -84,10 +82,6 @@ def update(id):
 
 if __name__ == "__main__":
   app.debug = True
-
   connect_to_db(app)
-
-  # Use the DebugToolbar
   DebugToolbarExtension(app)
-
   app.run(host="0.0.0.0")
