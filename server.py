@@ -57,8 +57,9 @@ def create():
     fname = request.form.get('first')
     lname = request.form.get('last')
     phone = request.form.get('phone')
+    photo = request.form.get('photo')
     languages = request.form.getlist('languages')
-    new_volunteer = Volunteer(first_name=fname, last_name=lname, phone=phone, active=True)
+    new_volunteer = Volunteer(first_name=fname, last_name=lname, phone=phone, photo=photo, active=True)
     db.session.add(new_volunteer)
     db.session.commit()
 
