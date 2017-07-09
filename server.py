@@ -4,7 +4,12 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, request, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
 from twilio.twiml.messaging_response import MessagingResponse
+from twilio.rest import Client
 
+from utils import (get_volunteer_numbers,
+                   format_recieved_message,
+                   phone_number_formatter,
+                   TWILIO_NUMBER)
 from model import connect_to_db, db, Language, Volunteer
 
 app = Flask(__name__)
@@ -16,16 +21,22 @@ account_sid = os.environ.get("TWILIO_ACCOUNT_SID")
 auth_token  = os.environ.get("TWILIO_ACCOUNT_AUTH_TOKEN")
 
 @app.route('/sms', methods=['GET', 'POST'])
-def sms_reply():
-    """Respond to incoming text messages"""
-    # The sender's phone number is available in payload
-    number = request.form['From']
-    message_body = request.form['Body']
+def sms_handle():
+    """Handles incoming text messages by sending notification to volunteers"""
+    # TODO: should there be a number validator to confirm that the message is not from volunteer?
+    # TODO: assign user to volunteer
+    numbers = get_volunteer_numbers()
+    client = Client(account_sid, auth_token)
+    for num in numbers:
+        client.messages.create(
+        to=phone_number_formatter(num),
+        from_=TWILIO_NUMBER,
+        body=format_recieved_message(request.form['From'], request.form['Body']))
+    return ""
 
-    resp = MessagingResponse()
-    # generic message for now
-    resp.message('Hello {}, you said: {}'.format(number, message_body))
-    return str(resp)
+@app.route('/sms', methods=['POST'])
+def sms_reply():
+    pass
 
 @app.route('/')
 def index():
