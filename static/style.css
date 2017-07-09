@@ -10,14 +10,33 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #FFC09F;
   color: white;
+  margin: 0;
+}
+
+.banner {
+  background-color: #9BCCD3;
+  padding: 10px 20px;
+}
+
+.content-container {
+  margin: 10px;
+}
+
+/* Headings */
+.title {
+  font-family: 'Zilla Slab', serif;
 }
 
 h1 {
-  font-family: 'Zilla Slab', serif;
   text-align: center;
   padding: 50px 10px;
 }
 
+h1.landing-page {
+  font-size: 72px;
+}
+
+/* Forms */
 form {
   max-width: 400px;
   margin: 0 auto;
@@ -28,7 +47,15 @@ input, select {
   border: 0;
   border-radius: 4px;
   height: 25px;
-  width: 300px;
+  width: 260px;
+}
+
+select {
+  width: 276px;
+}
+
+input {
+  padding: 0 8px;
 }
 
 .link-container, .button-container {
@@ -46,6 +73,7 @@ input, select {
   text-decoration: none;
   text-transform: capitalize;
 }
+
 .form-group {
   display: flex;
   justify-content: space-between;
