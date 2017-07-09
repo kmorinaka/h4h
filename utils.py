@@ -8,12 +8,11 @@ from model import connect_to_db, db, Language, Volunteer, Event
 TWILIO_NUMBER = "+16787374363"
 detectlanguage.configuration.api_key = os.environ.get("DETECTLANGUAGE_API_KEY")
 
-def get_volunteer_numbers():
-    volunteers = Volunteer.query.all()
-    return [v.phone for v in volunteers]
+def get_volunteer_numbers(message):
+    language = detect_language(message)
+    return phone_numbers_by_language(language)
 
 def format_acceptance_message(event_id):
-    # TODO: update message without user_number
     return """Hi Polyglot! Someone needs your translation assistance. \nRespond back with the number {} to accept.""".format(event_id)
 
 def grab_event(event_id):
