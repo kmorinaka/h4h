@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import os
 import sys
 from jinja2 import StrictUndefined
@@ -55,9 +52,7 @@ def index():
 def new():
     """ Display new volunteer form with all languages """
     languages = Language.query.all()
-
     return render_template("new.html", languages=languages)
-
 
 @app.route('/volunteer', methods=['POST'])
 def create():
