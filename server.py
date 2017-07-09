@@ -9,6 +9,7 @@ from twilio.rest import Client
 from utils import (get_volunteer_numbers,
                    format_recieved_message,
                    phone_number_formatter,
+                   is_volunteer,
                    TWILIO_NUMBER)
 from model import connect_to_db, db, Language, Volunteer, VolunteerLanguage
 
@@ -25,13 +26,20 @@ def sms_handle():
     """Handles incoming text messages by sending notification to volunteers"""
     # TODO: should there be a number validator to confirm that the message is not from volunteer?
     # TODO: assign user to volunteer
-    numbers = get_volunteer_numbers()
-    client = Client(account_sid, auth_token)
-    for num in numbers:
-        client.messages.create(
-        to=phone_number_formatter(num),
-        from_=TWILIO_NUMBER,
-        body=format_recieved_message(request.form['From'], request.form['Body']))
+    # user/volunteer check
+    if is_volunteer():
+        # TODO: check that event happened
+        # TODO: create event
+        # TODO: respond to volunteer with user_number
+        pass
+    else:
+        numbers = get_volunteer_numbers()
+        client = Client(account_sid, auth_token)
+        for num in numbers:
+            client.messages.create(
+            to=phone_number_formatter(num),
+            from_=TWILIO_NUMBER,
+            body=format_recieved_message(request.form['From'], request.form['Body']))
     return ""
 
 @app.route('/sms', methods=['POST'])
