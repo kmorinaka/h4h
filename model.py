@@ -20,8 +20,10 @@ class Volunteer(db.Model):
     volunteer_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     first_name = db.Column(db.String(64))
     last_name = db.Column(db.String(64))
-    phone = db.Column(db.String(10))
+    phone = db.Column(db.String(15))
     active = db.Column(db.Boolean())
+
+    languages = db.relationship("Language", backref=db.backref("volunteers"), secondary="volunteerlanguage")
 
 
 class Language(db.Model):
@@ -40,14 +42,12 @@ class VolunteerLanguage(db.Model):
 
     vl_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     v_id = db.Column(db.Integer, db.ForeignKey('volunteers.volunteer_id'))
-    l_id = db.Column(db.Integer, db.ForeignKey('languagess.language_id'))
+    l_id = db.Column(db.Integer, db.ForeignKey('languages.language_id'))
 
 
 if __name__ == "__main__":
-    # As a convenience, if we run this module interactively, it will
-    # leave you in a state of being able to work with the database
-    # directly.
 
     from server import app
     connect_to_db(app)
+    db.create_all()
     print "Connected to DB."
