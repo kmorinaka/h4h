@@ -21,17 +21,19 @@ def index():
 
 @app.route('/new', methods=['GET'])
 def new():
-    # include languages
-    return render_template("new.html")
+    """ Display new volunteer form with all languages """
+    languages = Language.query.all()
+
+    return render_template("new.html", languages)
 
 
 @app.route('/volunteer/', methods=['POST'])
 def create():
     """" Create a new volunteer record from incoming form data """
 
-    fname = request.form.get(first)
-    lname = request.form.get(last)
-    phone = request.form.get(phone)
+    fname = request.form.get('first')
+    lname = request.form.get('last')
+    phone = request.form.get('phone')
 
     new_volunteer = Volunteer(first_name=fname, last_name=l_name, phone=phone, active=True)
     db.session.add(new_volunteer)
@@ -44,30 +46,43 @@ def create():
 def show(id):
     """ Show profile of volunteer """
 
-    volunteer = Volunteer.query.filter_by(volunteer_id=id)
-    languages = VolunteerLanguage.query.filter_by(v_id=id)
+    volunteer = Volunteer.query.get(id)
 
     return render_template("profile.html", volunteer)
 
 
 @app.route('/volunteer/<id>/edit', methods=['GET'])
 def edit(id):
-    #  show info in form to be edited
+
+    volunteer = Volunteer.query.get(id)
 
     return render_template("edit.html")
 
 
 @app.route('/volunteer/<id>', methods=['PUT'])
 def update(id):
-    # update with new params
 
-    id = 1
+    fname = request.form.get('first')
+    lname = request.form.get('last')
+    phone = request.form.get('phone')
+    active = request.form.get('active')
+
+    volunteer = Volunteer.query.get(id)
+    if fname != volunteer.first_name:
+        volunteer.first_name = fname
+    if lname != volunteer.lname:
+        volunteer.last_name = lname
+    if phone != volunteer.phone:
+        volunteer.phone = phone
+    if active != volunteer.active:
+        volunteer.active = active
+
+    db.session.commit()
+
     return redirect("/volunteer/%s" % id)
 
 
 if __name__ == "__main__":
-  # We have to set debug=True here, since it has to be True at the point
-  # that we invoke the DebugToolbarExtension
   app.debug = True
 
   connect_to_db(app)
