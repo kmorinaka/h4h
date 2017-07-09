@@ -2,6 +2,8 @@ import logging
 import os
 import detectlanguage
 from model import connect_to_db, db, Language, Volunteer
+from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
+from model import connect_to_db, db, Language, Volunteer, Event
 
 TWILIO_NUMBER = "+16787374363"
 detectlanguage.configuration.api_key = os.environ.get("DETECTLANGUAGE_API_KEY")
@@ -10,14 +12,21 @@ def get_volunteer_numbers():
     volunteers = Volunteer.query.all()
     return [v.phone for v in volunteers]
 
-
-def format_recieved_message(user_number, message):
+def format_acceptance_message(event_id):
     # TODO: update message without user_number
-    return """Hi Polyglot! Someone needs your translation assistance at {}.
-              Here's their message: {}""".format(user_number, message)
+    return """Hi Polyglot! Someone needs your translation assistance. \nRespond back with the number {} to accept.""".format(event_id)
 
-def format_user_number_message(user_number):
-    pass
+def grab_event(event_id):
+    return Event.query.filter_by(event_id=event_id).scalar()
+
+def confirm_event(event_id):
+    event = Event.query.filter_by(event_id=event_id).scalar()
+    event.confirmed = True
+    db.session.add(event)
+    db.session.commit()
+
+def format_send_user_message(message):
+    return "Thanks for accepting!  Here's message and phone number at which to followup: {}".format(message)
 
 
 def phone_number_formatter(phone_number):
@@ -46,11 +55,19 @@ def phone_numbers_by_language(language):
 
 
 def is_volunteer(phone_number):
+    phone_number = phone_number.replace("+1", "")
     try:
         Volunteer.query.filter_by(phone=phone_number).one()
-        return true
+        return True
     except NoResultFound:
-        return false
+        return False
     except MultipleResultsFound:
         logging.error("multiple volunteers with number {}".format(phone_number))
-        return true
+        return True
+
+def create_event(user_number, user_message):
+    message = "{}: {}".format(user_number, user_message)
+    new_event = Event(message=message, confirmed=False)
+    db.session.add(new_event)
+    db.session.commit()
+    return new_event.event_id

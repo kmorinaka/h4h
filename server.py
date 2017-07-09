@@ -6,11 +6,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio.rest import Client
 
-from utils import (get_volunteer_numbers,
-                   format_recieved_message,
-                   phone_number_formatter,
-                   is_volunteer,
-                   TWILIO_NUMBER)
+from utils import *
 from model import connect_to_db, db, Language, Volunteer, VolunteerLanguage
 
 app = Flask(__name__)
@@ -20,26 +16,27 @@ app.secret_key = "ABC"
 account_sid = os.environ.get("TWILIO_ACCOUNT_SID")
 # Your Auth Token from twilio.com/console
 auth_token  = os.environ.get("TWILIO_ACCOUNT_AUTH_TOKEN")
+client = Client(account_sid, auth_token)
 
 @app.route('/sms', methods=['GET', 'POST'])
 def sms_handle():
     """Handles incoming text messages by sending notification to volunteers"""
-    # TODO: should there be a number validator to confirm that the message is not from volunteer?
-    # TODO: assign user to volunteer
-    # user/volunteer check
-    if is_volunteer():
-        # TODO: check that event happened
-        # TODO: create event
-        # TODO: respond to volunteer with user_number
-        pass
+    if is_volunteer(request.form['From']):
+        event_occurred = grab_event(request.form['Body'])
+        if event_occurred and event_occurred.confirmed == False:
+            client.messages.create(
+            to=request.form['From'],
+            from_=TWILIO_NUMBER,
+            body=format_send_user_message(event_occurred.message))
+            confirm_event(event_occurred.event_id)
     else:
+        event_id = create_event(request.form['From'], request.form['Body'])
         numbers = get_volunteer_numbers()
-        client = Client(account_sid, auth_token)
         for num in numbers:
             client.messages.create(
             to=phone_number_formatter(num),
             from_=TWILIO_NUMBER,
-            body=format_recieved_message(request.form['From'], request.form['Body']))
+            body=format_acceptance_message(event_id))
     return ""
 
 @app.route('/sms', methods=['POST'])
