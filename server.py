@@ -81,15 +81,6 @@ def create():
     return redirect("/volunteer/%s" % new_volunteer.volunteer_id)
 
 
-@app.route('/volunteer/<id>', methods=['GET'])
-def show(id):
-    """ Show profile of volunteer """
-
-    volunteer = Volunteer.query.get(id)
-
-    return render_template("profile.html", volunteer=volunteer)
-
-
 @app.route('/volunteer/<id>/edit', methods=['GET'])
 def edit(id):
     """" Show a prefilled volunteer form for editing """
