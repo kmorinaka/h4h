@@ -26,6 +26,14 @@ body {
 .home-link {
   text-decoration: none;
   font-weight: 700;
+  font-size: 40px;
+  color: white;
+}
+
+.other-link {
+  text-decoration: none;
+  margin: 0 32px;
+  color: white;
 }
 
 /* Headings */
@@ -36,10 +44,6 @@ body {
 h1 {
   text-align: center;
   padding: 50px 10px;
-}
-
-h1.landing-page {
-  font-size: 72px;
 }
 
 /* Forms */
@@ -88,7 +92,9 @@ input {
 
 /* Profile */
 .profile-card {
-  width: 400px;
+  display: flex;
+  align-items: center;
+  width: 600px;
   margin: 30px auto;
   background-color: white;
   color: #686576;
@@ -96,12 +102,17 @@ input {
   border-radius: 3px;
 }
 
-h2 {
-  margin-top: 0;
+.profile-card-photo {
+  display: inline-block;
+  margin-right: 50px;
+}
+.edit-page-photo {
+  margin-bottom: 50px;
 }
 
-#photo {
-  margin: 50px;
+.photo {
   width: 250px;
+  height: 250px;
   border-radius: 150px;
 }
+
