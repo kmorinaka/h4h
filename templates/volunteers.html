@@ -12,15 +12,18 @@
         <div>
           <h2>{{ volunteer.first_name }} {{ volunteer.last_name }}</h2>
           <div>
-            Phone: {{ volunteer.phone }}
+            <span class="label">Phone:</span>
+            <span class="info">{{ volunteer.phone }}</span>
           </div>
           <div>
-            Languages:
+            <span class="label">Languages:</span>
             {% for language in volunteer.languages %}
-            {{ language.language }}
+              {{ language.language }}{{ "," if not loop.last }}
             {% endfor %}
           </div>
-          <a href="/volunteer/{{ volunteer.volunteer_id }}/edit">Edit</a>
+          <div class="edit-container">
+            <a class="edit-link" href="/volunteer/{{ volunteer.volunteer_id }}/edit">Edit</a>
+          </div>
         </div>
       </div>
     {% endfor %}

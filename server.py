@@ -129,7 +129,7 @@ def update(id):
         db.session.delete(VolunteerLanguage(v_id=id, l_id=language_id))
 
     db.session.commit()
-    return redirect("/volunteer/%s" % id)
+    return redirect("/volunteers/all")
 
 
 if __name__ == "__main__":
