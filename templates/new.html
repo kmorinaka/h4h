@@ -7,30 +7,27 @@
   <h1>Add translator</h1>
   <form>
     <div class="form-group">
-      <label for="first-name">First Name
-        <input type="text" id="first-name" name="first_name">
-      </label>
+      <label for="first-name">First Name</label>
+      <input type="text" id="first-name" name="first_name">
     </div>
     <div class="form-group">
-      <label for="first-name">Last Name
-        <input type="text" id="last-name" name="last_name">
-      </label>
+      <label for="first-name">Last Name</label>
+      <input type="text" id="last-name" name="last_name">
     </div>
     <div class="form-group">
-      <label for="first-name">Phone
-        <input type="text" id="phone" name="phone">
-      </label>
+      <label for="first-name">Phone</label>
+      <input type="text" id="phone" name="phone">
     </div>
     <div class="form-group">
-      <label for="first-name">Language
-        <select>
-          {% for language in languages %}
-            <option id="languages" value={{ language }}>{{language.language}}</option>
-          {% endfor %}
-        </select>
-      </label>
+      <label for="first-name">Language</label>
+      <select>
+        {% for language in languages %}
+        <option id="languages" value={{ language }}>{{language.language}}</option>
+        {% endfor %}
+      </select>
     </div>
-    <div class="form-group">
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="button-container">
+      <button type="submit" class="button btn btn-primary">Submit</button>
+    </div>
   </form>
 {% endblock %}
