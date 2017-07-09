@@ -35,7 +35,7 @@ class Language(db.Model):
     language = db.Column(db.String(15), unique=True)
 
     def get_id_by_language(self, language):
-        return Language.query.filter_by(language = language).one().id
+        return Language.query.filter_by(language = language).one().language_id
 
 
 class VolunteerLanguage(db.Model):
