@@ -53,6 +53,7 @@ class Event(db.Model):
     """ Each volunteer client match event """
 
     event_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    message = db.Column(db.Text)
     confirmed = db.Column(db.Boolean())
 
 
