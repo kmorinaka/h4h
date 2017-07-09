@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block title %}Welcome!{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  <h1 class="title">Volunteers</h1>
+  <div>
+    {% for volunteer in volunteers %}
+      <div class="profile-card">
+        <img class="photo profile-card-photo" src="{{ volunteer.photo }}">
+        <div>
+          <h2>{{ volunteer.first_name }} {{ volunteer.last_name }}</h2>
+          <div>
+            Phone: {{ volunteer.phone }}
+          </div>
+          <div>
+            Languages:
+            {% for language in volunteer.languages %}
+            {{ language.language }}
+            {% endfor %}
+          </div>
+          <a href="/volunteer/{{ volunteer.volunteer_id }}/edit">Edit</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+{% endblock %}

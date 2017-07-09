@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block title %}Welcome!{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+
+<h1 class="title">Edit profile</h1>
+<img class="photo edit-page-photo" src="{{ volunteer.photo }}" style="margin-top: 0">
+<div>
+  <form method="PUT" action="/volunteer/{{ volunteer.id }}">
+    <div class="form-group">
+      <label for="first-name">First Name</label>
+      <input type="text" id="first-name" name="first" value="{{ volunteer.first_name }}" required>
+    </div>
+    <div class="form-group">
+      <label for="last-name">Last Name</label>
+      <input type="text" id="last-name" name="last" value="{{ volunteer.last_name }}" required>
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone</label>
+      <input type="text" id="phone" name="phone" value="{{ volunteer.phone }}" required>
+    </div>
+    <div class="form-group">
+      <label for="photo">Photo</label>
+      <input type="text" name="photo" value="{{ volunteer.photo }}">
+    </div>
+    <div class="form-group">
+      <label for="languages">Language</label>
+      <select name="languages" multiple required>
+        {% for language in languages %}
+        <option id="languages" value={{ language.language }} {% if language.language in volunteer.languages %} selected="true" {% endif %}>
+          {{language.language}}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="button-container">
+      <button type="submit" class="button btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}
