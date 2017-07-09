@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}Welcome!{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  <h1>{{ volunteer.first_name }} {{ volunteer.last_name }}</h1>
+  <div class="link-container">
+    Phone: {{ volunteer.phone }}
+  </div>
+
+{% endblock %}

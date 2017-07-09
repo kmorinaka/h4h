@@ -40,15 +40,14 @@ def new():
     return render_template("new.html", languages=languages)
 
 
-@app.route('/volunteer/', methods=['POST'])
+@app.route('/volunteer', methods=['POST'])
 def create():
     """" Create a new volunteer record from incoming form data """
-
     fname = request.form.get('first')
     lname = request.form.get('last')
     phone = request.form.get('phone')
     languages = request.form.getlist('languages')
-    new_volunteer = Volunteer(first_name=fname, last_name=l_name, phone=phone, active=True)
+    new_volunteer = Volunteer(first_name=fname, last_name=lname, phone=phone, active=True)
     db.session.add(new_volunteer)
     db.session.commit()
 
@@ -74,6 +73,7 @@ def show(id):
 @app.route('/volunteer/<id>/edit', methods=['GET'])
 def edit(id):
     """" Show a prefilled volunteer form for editing """
+
     volunteer = Volunteer.query.get(id)
 
     return render_template("edit.html")
@@ -118,6 +118,10 @@ def update(id):
 
 if __name__ == "__main__":
   app.debug = True
+
   connect_to_db(app)
+
+  # Use the DebugToolbar
   DebugToolbarExtension(app)
+
   app.run(host="0.0.0.0")
