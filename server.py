@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
 from twilio.twiml.messaging_response import MessagingResponse
 
-from model import connect_to_db, db, Language, Volunteer
+from model import connect_to_db, db, Language, Volunteer, VolunteerLanguage
 
 app = Flask(__name__)
 
@@ -52,7 +52,7 @@ def create():
     db.session.commit()
 
     for language in languages:
-        language_id = Language.query.filter_by(language=language).one().id
+        language_id = Language.query.filter_by(language=language).one().language_id
         volunteer_language = VolunteerLanguage(v_id=new_volunteer.volunteer_id, l_id=language_id)
         db.session.add(volunteer_language)
     db.session.commit()
