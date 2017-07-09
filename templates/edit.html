@@ -23,13 +23,13 @@
     </div>
     <div class="form-group">
       <label for="photo">Photo</label>
-      <input type="text" name="photo" value="{{ volunteer.photo }}">
+      <input type="text" id="photo" name="photo" value="{{ volunteer.photo }}">
     </div>
     <div class="form-group">
       <label for="languages">Language</label>
-      <select size=30 style='height: 100%;'name="languages" multiple required>
+      <select size=30 style='height: 100%;' class="edit-page-select" name="languages" multiple required>
         {% for language in languages %}
-        <option id="languages" value={{ language.language }} {% if language.language in volunteer.languages %} selected="true" {% endif %}>
+        <option id="languages" value={{ language.language }} {% if language in volunteer.languages %} selected="true" {% endif %}>
           {{language.language}}
         </option>
         {% endfor %}
