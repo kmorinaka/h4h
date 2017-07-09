@@ -4,10 +4,22 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
+
   <img src="{{ volunteer.photo }}">
   <h1>{{ volunteer.first_name }} {{ volunteer.last_name }}</h1>
   <div class="link-container">
     Phone: {{ volunteer.phone }}
+  <div class="profile-card">
+    <h2>{{ volunteer.first_name }} {{ volunteer.last_name }}</h2>
+    <div>
+      Phone: {{ volunteer.phone }}
+    </div>
+    <div>
+      Languages:
+      {% for language in volunteer.languages %}
+        {{ language.language }}
+      {% endfor %}
+    </div>
   </div>
 
 {% endblock %}
