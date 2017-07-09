@@ -31,12 +31,12 @@ def sms_handle():
             confirm_event(event_occurred.event_id)
     else:
         event_id = create_event(request.form['From'], request.form['Body'])
-        numbers = get_volunteer_numbers()
+        numbers, language = get_volunteer_numbers(request.form['Body'])
         for num in numbers:
             client.messages.create(
             to=phone_number_formatter(num),
             from_=TWILIO_NUMBER,
-            body=format_acceptance_message(event_id))
+            body=format_acceptance_message(event_id, language))
     return ""
 
 @app.route('/sms', methods=['POST'])
