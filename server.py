@@ -15,10 +15,6 @@ account_sid = os.environ.get("TWILIO_ACCOUNT_SID")
 # Your Auth Token from twilio.com/console
 auth_token  = os.environ.get("TWILIO_ACCOUNT_AUTH_TOKEN")
 
-# Normally, if you use an undefined variable in Jinja2, it fails silently.
-# This is horrible. Fix this so that, instead, it raises an error.
-app.jinja_env.undefined = StrictUndefined
-
 @app.route('/sms', methods=['GET', 'POST'])
 def sms_reply():
     """Respond to incoming text messages"""
@@ -51,10 +47,17 @@ def create():
     fname = request.form.get('first')
     lname = request.form.get('last')
     phone = request.form.get('phone')
-
+    languages = request.form.get_list('language')
     new_volunteer = Volunteer(first_name=fname, last_name=l_name, phone=phone, active=True)
     db.session.add(new_volunteer)
     db.session.commit()
+
+    for language in languages:
+        language_id = Language.query.filter_by(language=language).one().id
+        volunteer_language = VolunteerLanguage(v_id=new_volunteer.volunteer_id, l_id=language_id)
+        db.session.add(volunteer_language)
+    db.session.commit()
+
 
     return redirect("/volunteer/%s" % new_volunteer.volunteer_id)
 
