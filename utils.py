@@ -17,3 +17,7 @@ def phone_number_formatter(phone_number):
     if len(phone_number) == 10:
         return "+1{}".format(phone_number)
     logging.error("invalid phone number in database: {}".format(phone_number))
+
+def phone_numbers_by_language(language):
+    language = Language.query.filter_by(language=language).one()
+    return [vol.phone for vol in language.volunteers]

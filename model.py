@@ -27,9 +27,9 @@ class Volunteer(db.Model):
     languages = db.relationship("Language", backref=db.backref("volunteers"), secondary="volunteerlanguage")
 
     @staticmethod
-    def select_volunteers_by_language(language):
+    def phone_numbers_by_language(language):
         language = Language.query.filter_by(language=language).one()
-        return language.volunteers
+        return [vol.phone for vol in language.volunteers]
 
 
 class Language(db.Model):
