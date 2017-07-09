@@ -24,7 +24,7 @@ def new():
     """ Display new volunteer form with all languages """
     languages = Language.query.all()
 
-    return render_template("new.html", languages)
+    return render_template("new.html", languages=languages)
 
 
 @app.route('/volunteer/', methods=['POST'])
@@ -48,7 +48,7 @@ def show(id):
 
     volunteer = Volunteer.query.get(id)
 
-    return render_template("profile.html", volunteer)
+    return render_template("profile.html", volunteer=volunteer)
 
 
 @app.route('/volunteer/<id>/edit', methods=['GET'])
