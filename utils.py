@@ -11,7 +11,12 @@ def get_volunteer_numbers():
     return [v.phone for v in volunteers]
 
 def format_recieved_message(user_number, message):
-    return "Hi Volunteer! Incoming Message from number {}: {}".format(user_number, message)
+    # TODO: update message without user_number
+    return """Hi Polyglot! Someone needs your translation assistance at {}.
+              Here's their message: {}""".format(user_number, message)
+
+def format_user_number_message(user_number):
+    pass
 
 def phone_number_formatter(phone_number):
     """check that phone number is correct length"""
@@ -32,3 +37,17 @@ def detect_language(text):
     lang_code = detectlanguage.simple_detect(text)
 
     return langs[lang_code]
+
+def phone_numbers_by_language(language):
+    language = Language.query.filter_by(language=language).one()
+    return [vol.phone for vol in language.volunteers]
+
+def is_volunteer(phone_number):
+    try:
+        Volunteer.query.filter_by(phone=phone_number).one()
+        return true
+    except NoResultFound:
+        return false
+    except MultipleResultsFound:
+        logging.error("multiple volunteers with number {}".format(phone_number))
+        return true

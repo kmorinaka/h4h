@@ -21,6 +21,7 @@ class Volunteer(db.Model):
     first_name = db.Column(db.String(64))
     last_name = db.Column(db.String(64))
     phone = db.Column(db.String(15))
+    photo = db.Column(db.String(300))
     active = db.Column(db.Boolean())
 
     languages = db.relationship("Language", backref=db.backref("volunteers"), secondary="volunteerlanguage")
@@ -46,6 +47,13 @@ class VolunteerLanguage(db.Model):
     vl_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     v_id = db.Column(db.Integer, db.ForeignKey('volunteers.volunteer_id'))
     l_id = db.Column(db.Integer, db.ForeignKey('languages.language_id'))
+
+
+class Event(db.Model):
+    """ Each volunteer client match event """
+
+    event_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    confirmed = db.Column(db.Boolean())
 
 
 if __name__ == "__main__":
