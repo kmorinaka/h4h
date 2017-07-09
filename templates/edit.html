@@ -8,7 +8,7 @@
 <h1 class="title">Edit profile</h1>
 <img class="photo edit-page-photo" src="{{ volunteer.photo }}" style="margin-top: 0">
 <div>
-  <form method="PUT" action="/volunteer/{{ volunteer.id }}">
+  <form method="POST" action="/volunteer/{{ volunteer.volunteer_id }}">
     <div class="form-group">
       <label for="first-name">First Name</label>
       <input type="text" id="first-name" name="first" value="{{ volunteer.first_name }}" required>
@@ -27,7 +27,7 @@
     </div>
     <div class="form-group">
       <label for="languages">Language</label>
-      <select name="languages" multiple required>
+      <select size=30 style='height: 100%;'name="languages" multiple required>
         {% for language in languages %}
         <option id="languages" value={{ language.language }} {% if language.language in volunteer.languages %} selected="true" {% endif %}>
           {{language.language}}

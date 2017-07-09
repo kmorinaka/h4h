@@ -9,5 +9,12 @@
     <a class="button" href="/new">Add volunteer</a>
     <a class="button" href="/volunteers/all">View all volunteers</a>
   </div>
-
+  {% if languages %}
+    <div class="lang-card">
+      <h2>Current Languages</h2>
+      {% for language in languages %}
+        <p>{{ language.language }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
 {% endblock %}

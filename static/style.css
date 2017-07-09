@@ -102,6 +102,15 @@ input {
   border-radius: 3px;
 }
 
+.lang-card {
+  width: 400px;
+  margin: 60px auto;
+  background-color: white;
+  color: #686576;
+  padding: 20px;
+  border-radius: 3px;
+}
+
 .profile-card-photo {
   display: inline-block;
   margin-right: 50px;
@@ -115,4 +124,3 @@ input {
   height: 250px;
   border-radius: 150px;
 }
-
