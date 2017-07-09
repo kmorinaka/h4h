@@ -22,7 +22,7 @@ class Volunteer(db.Model):
     last_name = db.Column(db.String(64))
     phone = db.Column(db.String(15))
     photo = db.Column(db.String(300))
-    active = db.Column(db.Boolean(), default=True)
+    active = db.Column(db.Boolean())
 
     languages = db.relationship("Language", backref=db.backref("volunteers"), secondary="volunteerlanguage")
 
