@@ -26,6 +26,11 @@ class Volunteer(db.Model):
 
     languages = db.relationship("Language", backref=db.backref("volunteers"), secondary="volunteerlanguage")
 
+    @staticmethod
+    def select_volunteers_by_language(language):
+        language = Language.query.filter_by(language=language).one()
+        return language.volunteers
+
 
 class Language(db.Model):
     """ Table of all languages """
@@ -47,6 +52,13 @@ class VolunteerLanguage(db.Model):
     vl_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     v_id = db.Column(db.Integer, db.ForeignKey('volunteers.volunteer_id'))
     l_id = db.Column(db.Integer, db.ForeignKey('languages.language_id'))
+
+
+class Event(db.Model):
+    """ Each volunteer client match event """"
+
+    event_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    confirmed = db.Column(db.Boolean())
 
 
 if __name__ == "__main__":
