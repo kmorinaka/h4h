@@ -15,11 +15,17 @@ body {
 
 .banner {
   background-color: #9BCCD3;
-  padding: 10px 20px;
+  padding: 20px;
 }
 
 .content-container {
   margin: 10px;
+  text-align: center;
+}
+
+.home-link {
+  text-decoration: none;
+  font-weight: 700;
 }
 
 /* Headings */
@@ -78,4 +84,18 @@ input {
   display: flex;
   justify-content: space-between;
   margin-bottom: 15px;
+}
+
+/* Profile */
+.profile-card {
+  width: 400px;
+  margin: 30px auto;
+  background-color: white;
+  color: #686576;
+  padding: 30px;
+  border-radius: 3px;
+}
+
+h2 {
+  margin-top: 0;
 }
