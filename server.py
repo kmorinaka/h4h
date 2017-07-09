@@ -47,7 +47,7 @@ def create():
     fname = request.form.get('first')
     lname = request.form.get('last')
     phone = request.form.get('phone')
-    languages = request.form.getlist('language')
+    languages = request.form.getlist('languages')
     new_volunteer = Volunteer(first_name=fname, last_name=l_name, phone=phone, active=True)
     db.session.add(new_volunteer)
     db.session.commit()
@@ -98,7 +98,7 @@ def update(id):
     if active != volunteer.active:
         volunteer.active = active
 
-    new_languages = set(request.form.getlist('language'))
+    new_languages = set(request.form.getlist('languages'))
     old_languages = {lang.language for lang in new_languages}
     # Get all new languages and exclude old languages not reaffirmed
     languages_to_add = new_languages - new_languages & old_languages
