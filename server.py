@@ -59,6 +59,7 @@ def new():
     languages = Language.query.all()
     return render_template("new.html", languages=languages)
 
+
 @app.route('/volunteer', methods=['POST'])
 def create():
     """" Create a new volunteer record from incoming form data """
@@ -78,7 +79,7 @@ def create():
     db.session.commit()
 
 
-    return redirect("/volunteer/%s" % new_volunteer.volunteer_id)
+    return redirect("/volunteers/all")
 
 
 @app.route('/volunteer/<id>/edit', methods=['GET'])
