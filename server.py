@@ -45,7 +45,12 @@ def sms_reply():
 
 @app.route('/')
 def index():
-    return render_template("homepage.html")
+
+    all_langs = []
+    for v_l in VolunteerLanguage.query.all():
+        all_langs.append(Language.query.filter_by(language_id=v_l.l_id).one())
+    print all_langs
+    return render_template("homepage.html", languages=all_langs)
 
 
 @app.route('/new', methods=['GET'])
@@ -92,7 +97,7 @@ def volunteers():
   return render_template("volunteers.html", volunteers=volunteers)
 
 
-@app.route('/volunteer/<id>', methods=['PUT'])
+@app.route('/volunteer/<id>', methods=['POST'])
 def update(id):
     """ Update volunteer record """
 
@@ -105,7 +110,7 @@ def update(id):
     volunteer = Volunteer.query.get(id)
     if fname != volunteer.first_name:
         volunteer.first_name = fname
-    if lname != volunteer.lname:
+    if lname != volunteer.last_name:
         volunteer.last_name = lname
     if phone != volunteer.phone:
         volunteer.phone = phone
@@ -116,20 +121,21 @@ def update(id):
 
     # Determine changes in language set for volunteer
     new_languages = set(request.form.getlist('languages'))
-    old_languages = {lang.language for lang in new_languages}
-    languages_to_add = new_languages - new_languages & old_languages
+    old_languages = {lang.language for lang in volunteer.languages}
+    languages_to_add = new_languages - (new_languages & old_languages)
     languages_to_remove = old_languages - new_languages
-
+    print languages_to_add
+    print new_languages
     # Update languages
     for language in languages_to_add:
         language_id = Language.get_id_by_language(language)
         db.session.add(VolunteerLanguage(v_id=id, l_id=language_id))
     for language in languages_to_remove:
-        language_id = Language.get_id_by_language(language)
-        db.session.delete(VolunteerLanguage(v_id=id, l_id=language_id))
+        language = Language.query.filter_by(language=language).one()
+        db.session.delete(language)
 
     db.session.commit()
-    return redirect("/volunteer/%s" % id)
+    return redirect("/volunteers/all")
 
 
 if __name__ == "__main__":
