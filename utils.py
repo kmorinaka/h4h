@@ -44,7 +44,7 @@ def phone_number_formatter(phone_number):
 
 def detect_language(text):
     """detects the language a text string is in and returns the language as a string"""
-    text = text.decode('utf-8')
+    text = text.encode('utf8')
     lang_code = detectlanguage.simple_detect(text)
     return langs[lang_code]
 
