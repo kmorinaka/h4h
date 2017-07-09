@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
 
-  {% if volunteer.photo %}<img src="{{ volunteer.photo }}">{% endif %}
+  {% if volunteer.photo %}<img src="{{ volunteer.photo }}" id="photo">{% endif %}
   <h1>{{ volunteer.first_name }} {{ volunteer.last_name }}</h1>
   <div class="link-container">
     Phone: {{ volunteer.phone }}

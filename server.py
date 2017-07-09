@@ -106,6 +106,7 @@ def update(id):
     fname = request.form.get('first')
     lname = request.form.get('last')
     phone = request.form.get('phone')
+    photo = request.form.get('photo')
     active = request.form.get('active')
 
     volunteer = Volunteer.query.get(id)
@@ -117,6 +118,8 @@ def update(id):
         volunteer.phone = phone
     if active != volunteer.active:
         volunteer.active = active
+    if photo != volunteer.photo:
+        volunteer.photo = photo
 
     # Determine changes in language set for volunteer
     new_languages = set(request.form.getlist('languages'))
