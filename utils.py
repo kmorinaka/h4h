@@ -4,6 +4,7 @@ import detectlanguage
 from model import connect_to_db, db, Language, Volunteer
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from model import connect_to_db, db, Language, Volunteer, Event
+import unicodedata
 
 TWILIO_NUMBER = "+16787374363"
 detectlanguage.configuration.api_key = os.environ.get("DETECTLANGUAGE_API_KEY")
@@ -44,14 +45,13 @@ def phone_number_formatter(phone_number):
 
 def detect_language(text):
     """detects the language a text string is in and returns the language as a string"""
-    text = text.encode('utf8')
-    lang_code = detectlanguage.simple_detect(text)
+    output = unicodedata.normalize('NFD', text).encode('ascii', 'ignore')
+    lang_code = detectlanguage.simple_detect(output)
     return langs[lang_code]
 
 def phone_numbers_by_language(language):
     language = Language.query.filter_by(language=language).one()
     return [vol.phone for vol in language.volunteers]
-
 
 def is_volunteer(phone_number):
     phone_number = phone_number.replace("+1", "")
@@ -65,7 +65,9 @@ def is_volunteer(phone_number):
         return True
 
 def create_event(user_number, user_message):
-    message = "PHONE NUMBER:{}, MESSAGE: {}".format(user_number, user_message)
+    output = unicodedata.normalize('NFD', user_message).encode('ascii', 'ignore')
+
+    message = "PHONE NUMBER:{}, MESSAGE: {}".format(user_number, output)
     new_event = Event(message=message, confirmed=False)
     db.session.add(new_event)
     db.session.commit()
