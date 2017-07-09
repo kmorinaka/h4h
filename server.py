@@ -93,7 +93,7 @@ def edit(id):
 @app.route('/volunteers/all', methods=['GET'])
 def volunteers():
 
-  volunteers = Volunteer.query.all().order_by(last_name)
+  volunteers = Volunteer.query.order_by(Volunteer.last_name).all()
 
   return render_template("volunteers.html", volunteers=volunteers)
 
@@ -140,7 +140,7 @@ def update(id):
 
 
 if __name__ == "__main__":
-  app.debug = False
+  app.debug = True
 
   connect_to_db(app)
 
