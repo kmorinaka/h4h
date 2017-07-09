@@ -1,4 +1,23 @@
-<input type="text" name="first_name">
-<input type="text" name="last_name">
-<select name="languages" id="">
-</select>
+{% extends "layout.html" %}
+{% block title %}Add translator{% endblock %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+{% endblock %}
+{% block content %}
+  <h1>Add translator</h1>
+  <p class="important">
+    <input type="text" name="first_name">
+    <input type="text" name="last_name">
+    <input type="text" name="phone">
+    <select name="languages" id="">
+      <input type="text" name="">
+    </select>
+    <select>
+      {% for language in languages %}
+        <option value={{ language }}>{{language}}</option>
+      {% endfor %}
+    </select>
+{% endblock %}
