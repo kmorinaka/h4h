@@ -37,7 +37,7 @@
     </div>
     <div>
       <label for="status">Status</label>
-      <input type="checkbox" id="status" checked="{{ volunteer.active }}">
+      <input type="checkbox" id="status" name="active" {% if volunteer.active %}checked{% endif %}>
     </div>
     <div class="button-container">
       <button type="submit" class="button btn btn-primary">Submit</button>

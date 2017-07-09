@@ -93,7 +93,7 @@ def edit(id):
 @app.route('/volunteers/all', methods=['GET'])
 def volunteers():
 
-  volunteers = Volunteer.query.all()
+  volunteers = Volunteer.query.all().order_by(last_name)
 
   return render_template("volunteers.html", volunteers=volunteers)
 
@@ -107,6 +107,7 @@ def update(id):
     phone = request.form.get('phone')
     photo = request.form.get('photo')
     active = request.form.get('active')
+    print active
 
     volunteer = Volunteer.query.get(id)
     if fname != volunteer.first_name:
@@ -125,8 +126,7 @@ def update(id):
     old_languages = {lang.language for lang in volunteer.languages}
     languages_to_add = new_languages - (new_languages & old_languages)
     languages_to_remove = old_languages - new_languages
-    print languages_to_add
-    print new_languages
+
     # Update languages
     for language in languages_to_add:
         language_id = Language.get_id_by_language(language)
@@ -140,7 +140,7 @@ def update(id):
 
 
 if __name__ == "__main__":
-  app.debug = True
+  app.debug = False
 
   connect_to_db(app)
 
