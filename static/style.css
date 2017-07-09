@@ -65,6 +65,7 @@ input, select {
 
 select {
   width: 276px;
+  padding: 5px 8px;
 }
 
 input {
@@ -74,6 +75,7 @@ input#status {
   width: inherit;
   margin-left: 74px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .link-container, .button-container {
