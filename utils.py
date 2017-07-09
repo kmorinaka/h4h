@@ -7,6 +7,7 @@ def get_volunteer_numbers():
     volunteers = Volunteer.query.all()
     return [v.phone for v in volunteers]
 
+
 def format_recieved_message(user_number, message):
     # TODO: update message without user_number
     return """Hi Polyglot! Someone needs your translation assistance at {}.
@@ -14,6 +15,7 @@ def format_recieved_message(user_number, message):
 
 def format_user_number_message(user_number):
     pass
+
 
 def phone_number_formatter(phone_number):
     """check that phone number is correct length"""
@@ -23,9 +25,11 @@ def phone_number_formatter(phone_number):
         return "+1{}".format(phone_number)
     logging.error("invalid phone number in database: {}".format(phone_number))
 
+
 def phone_numbers_by_language(language):
     language = Language.query.filter_by(language=language).one()
     return [vol.phone for vol in language.volunteers]
+
 
 def is_volunteer(phone_number):
     try:
