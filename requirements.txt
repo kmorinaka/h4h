@@ -33,7 +33,7 @@ psycopg2==2.7.1
 ptyprocess==0.5.1
 pyasn1==0.1.9
 pycrypto==2.6.1
-Pygments==2.2.0
+Pygments==2.7.4
 pyOpenSSL==16.2.0
 pyparsing==2.1.10
 python-cloudfiles==1.7.10
