@@ -48,7 +48,7 @@ SQLAlchemy==1.1.11
 subprocess32==3.2.7
 traitlets==4.3.1
 unicodedata
-urllib3==1.15.1
+urllib3==1.26.5
 wcwidth==0.1.7
 Werkzeug==0.12.2
 detectlanguage
